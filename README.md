@@ -106,3 +106,66 @@
 ### 2.7 模板继承
 
 可以将网站HTML骨架抽离到单独的文件中，其他页面模板可以继承骨架文件
+
+- 模板骨架
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {{block 'link'}} {{ /block}}<!-- 待填充 -->
+</head>
+<body>
+    {{block 'content'}} {{/block}}<!-- 待填充 -->
+    
+</body>
+</html>
+```
+---
+
+- 继承模板
+```jacascript
+{{extend './common/layout.art'}}<!-- 继承模板骨架 -->
+
+{{block 'content'}}<!-- 填充模板内容 -->
+<p>{{ msg }}</p>
+{{/block}}
+
+{{block 'link'}}<!-- 填充模板内容 -->
+<link rel="stylesheet" href="./main.css">
+{{/block}}
+```
+
+
+### 2.9 模板配置
+
+#### （1）日期格式化
+- 通过`npm install dateformat` 下载模块
+- 再通过`require` 调动使用
+- 默认情况下，不能直接在模板中调用dateformat方法
+- ** 只能将方法作为模板的变量导入到模板中 ** 
+`template.defaults.imports.dateFormat(自定义) = dateFormat（方法名称）`
+- 格式化时间
+`{{ dateFormat(time, 'yyyy-mm-dd')}}`
+- 设置模板根目录
+`template.defaults.root = 模板目录`
+- 设置模板默认后缀
+`template.defaults.extname = '.art'`
+
+## 3. 案例
+
+### 3.1 学生档案管理
+- 目标：模板引擎应用，强化node.js项目制作流程
+- 知识点：http请求相应、数据库、模板引擎、静态资源访问
+
+>制作流程
+1. 建立项目文件夹并生成项目描述文件
+* `npm init -y` 生成项目描述文件，
+2. 创建网站服务器实现客户端和服务器端通信
+3. 连接数据库并根据需求设计学员信息表
+4. 创建路由并实现页面模板呈递
+5. 实现静态资源访问
+6. 实现学生信息添加功能
+7. 实现学生信息展示功能
